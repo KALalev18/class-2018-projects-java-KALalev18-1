@@ -1,5 +1,7 @@
 package Services;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.sql.SQLException;
 
 import Repositorities.UserRepository;
@@ -27,7 +29,7 @@ public class RegisterService {
         return correctUser;
     }
 
-	public void insertUser(int user_ID, int registration_ID, String user_Email, String user_Password, String first_Name, String last_Name, String phone_Number) {
+	public void insertUser(int user_ID, int registration_ID, String user_Email, String user_Password, String first_Name, String last_Name, String phone_Number) throws NoSuchAlgorithmException, NoSuchProviderException {
 		
 		String nesh = PasswordManager.getNext();
 		user_Password = PasswordManager.hash(user_Password.toCharArray(), nesh);

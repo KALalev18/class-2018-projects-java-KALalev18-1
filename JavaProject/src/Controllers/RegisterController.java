@@ -1,5 +1,7 @@
 package Controllers;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.sql.SQLException;
 
 import Menus.ErrorMenu;
@@ -15,7 +17,7 @@ public class RegisterController {
 		this.regService = RegisterService.getInstance();
 	}
 
-	public void run() throws SQLException {
+	public void run() throws SQLException, NoSuchAlgorithmException, NoSuchProviderException {
 
 		while (regService.getCorrectUser() == false) {
 
@@ -31,12 +33,12 @@ public class RegisterController {
 			while (!email.endsWith("@gmail.com") ^ !email.endsWith("@yahoo.com") ^ !email.endsWith("@hotmail.com")
 					^ !email.endsWith("@codingburgas.com") ^ !email.endsWith("@abv.bg")) {
 				ErrorMenu.invalidDomain();
-				Utils.writeLine("E-MAIL: ");
+				Utils.writeLine("Email: ");
 				email = Utils.read();
 				while (email.equals("@gmail.com") ^ email.equals("@yahoo.com") ^ email.equals("@hotmail.com")
 						^ email.equals("@codingburgas.com") ^ email.equals("@abv.bg")) {
 					ErrorMenu.invalidEmailUsername();
-					Utils.writeLine("E-MAIL: ");
+					Utils.writeLine("Email: ");
 					email = Utils.read();
 				}
 			}
@@ -70,7 +72,7 @@ public class RegisterController {
 		}
 	}
 
-	private void backToMainMenu() throws SQLException {
+	private void backToMainMenu() throws SQLException, NoSuchAlgorithmException, NoSuchProviderException {
 		MainController mainMenu = new MainController();
 		mainMenu.run();
 	}

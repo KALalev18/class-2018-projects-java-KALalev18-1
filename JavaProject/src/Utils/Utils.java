@@ -15,20 +15,20 @@ public class Utils {
 		System.out.println(line);
 	}
 
+	public static void writeNewLine() {
+		System.out.println();
+	}
+
 	public static void clear() {
 		for (int i = 0; i <= 30; i++) {
 			System.out.println();
 		}
 	}
 
-	public static void writeNewLine() {
-		System.out.println();
-	}
-
 	public static String read() {
 		return sc.nextLine();
 	}
-	
+
 	public static void writeInteger(int number) {
 		System.out.print(number);
 	}
@@ -47,6 +47,10 @@ public class Utils {
 		return result;
 	}
 
+	public static void writeDouble(double number) {
+		System.out.print(number);
+	}
+	
 	public static double readDouble() {
 
 		Double result = null;
@@ -61,6 +65,17 @@ public class Utils {
 		return result;
 	}
 
-	
+	public static String readString() {
+
+		String result = null;
+		while (result == null) {
+			try {
+				result = sc.nextLine();
+			} catch (NumberFormatException e) {
+				ErrorMenu.invalidInputError();
+			}
+		}
+		return result;
+	}
 
 }
