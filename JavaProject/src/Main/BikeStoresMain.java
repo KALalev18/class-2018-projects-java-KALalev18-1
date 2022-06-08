@@ -25,14 +25,16 @@ public class BikeStoresMain
 		
 		// System.out.println(System.getProperty("file.encoding"));
 
-		MainController main = new MainController();
-		main.run();
+//		MainController main = new MainController();
+//		main.run();
 		
 		
 		
 		UserRepository user = new UserRepository();
+
+		
 		System.out.println();
-		System.out.println("User_Info top 7 records table: ");
+		System.out.println("User_Info top 10 records table: ");
 		System.out.println();
 		user.ShowCustomers();
 		

@@ -1,5 +1,7 @@
 package Controllers;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.sql.SQLException;
 
 import Menus.*;
@@ -33,46 +35,42 @@ public class AdministrationController {
 				break;
 			}
 			case 3: {
-				makeUserAdmin();
-				break;
-			}
-			case 4: {
 				deleteUser();
 				break;
 			}
-			case 5: {
+			case 4: {
 				deleteAdmin();
 				break;
 			}
-			case 6: {
+			case 5: {
 				deletePersonalAccount();
 				break;
 			}
-			case 7: {
+			case 6: {
 				viewAllUsers();
 				break;
 			}
-			case 8: {
+			case 7: {
 				viewAllAdmins();
 				break;
 			}
-			case 9: {
+			case 8: {
 				logOut();
 				break;
 			}
-			case 10: {
+			case 9: {
 				viewSportRequests();
 				break;
 			}
-			case 11: {
+			case 10: {
 				removeSportRequests();
 				break;
 			}
-			case 21: {
-				authenticationService.destroySession();
-				backToMainMenu();
-				break;
-			}
+//			case 21: {
+//				authenticationService.destroySession();
+//				backToMainMenu();
+//				break;
+//			}
 
 			default:
 				ErrorMenu.invalidInputError();
@@ -130,12 +128,7 @@ public class AdministrationController {
 		users.deleteUserById();
 	}
 
-	private void makeUserAdmin() throws SQLException {
-		UserController user = new UserController();
-		user.makeUserAdminById();
-	}
-
-	private void backToMainMenu() throws SQLException {
+	private void backToMainMenu() throws SQLException, NoSuchAlgorithmException, NoSuchProviderException {
 		MainController mainController = new MainController();
 		mainController.run();
 	}

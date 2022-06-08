@@ -19,7 +19,9 @@ public class AuthenticationController {
 
 		while (authService.getLoggedUser() == null) {
 			
+			Utils.writeLine("First name: ");
 			String firstName = Utils.read();
+			Utils.writeLine("Last name: ");
 			String lastName = Utils.read();
 			Utils.writeLine("Password: ");
 			String password = Utils.read();

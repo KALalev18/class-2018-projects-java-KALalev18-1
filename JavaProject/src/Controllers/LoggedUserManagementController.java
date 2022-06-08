@@ -1,5 +1,7 @@
 package Controllers;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.sql.SQLException;
 
 import Menus.LoggedUserMenu;
@@ -15,7 +17,7 @@ public class LoggedUserManagementController {
 
 	}
 
-	public void run() throws SQLException {
+	public void run() throws SQLException, NoSuchAlgorithmException, NoSuchProviderException {
 
 		LoggedUserMenu.loggedUserMenu();
 
@@ -38,7 +40,7 @@ public class LoggedUserManagementController {
 	}
 
 	
-	private void backToMainMenu() throws SQLException {
+	private void backToMainMenu() throws SQLException, NoSuchAlgorithmException, NoSuchProviderException {
 		MainController mainMenu = new MainController();
 		mainMenu.run();
 	}

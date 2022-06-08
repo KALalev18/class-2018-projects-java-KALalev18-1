@@ -1,5 +1,7 @@
 package Controllers;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.sql.SQLException;
 
 import Menus.*;
@@ -17,7 +19,7 @@ public class MainController {
 		this.authService = AuthenticationService.getInstance();
 	}
 
-	public void run() throws SQLException {
+	public void run() throws SQLException, NoSuchAlgorithmException, NoSuchProviderException {
 
 		int optionForAccount;
 

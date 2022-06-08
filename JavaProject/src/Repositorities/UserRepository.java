@@ -19,17 +19,21 @@ public class UserRepository {
 	private static Connection conn;
 	private static UserRepository instance = null;
 
+	public static UserRepository getInstance() throws SQLException {
+
+		if (UserRepository.instance == null) {
+			UserRepository.instance = new UserRepository();
+		}
+
+		return UserRepository.instance;
+	}
+
 	public UserRepository() throws SQLException {
 		System.out.println("Connecting...");
 		conn = DriverManager.getConnection(url);
 		System.out.println("Connected!");
 	}
 
-	/*
-	 * public static UserRepository getInstance() throws SQLException { if
-	 * (UserRepository.instance == null) { UserRepository.instance = new
-	 * UserRepository(); } return UserRepository.instance; }
-	 */
 	public void CloseConnecton() throws SQLException {
 		conn.close();
 	}
@@ -89,13 +93,13 @@ public class UserRepository {
 
 	public User_Info getRegisteredUser(String firstName, String lastName, String password) {
 		User_Info user = null;
-		String query = "SELECT * FROM users WHERE Username = ?";
+		String query = "SELECT * FROM users WHERE First_Name = ?";
 		try (Connection conn = DatabaseConnection.getConnection();
 				PreparedStatement ps = getPSWithNames(conn, query, firstName, lastName, password);
-				ResultSet resultSet = ps.executeQuery()) {
+				ResultSet rs = ps.executeQuery()) {
 
-			while (resultSet.next()) {
-				user = mapToUser(resultSet);
+			while (rs.next()) {
+				user = mapToUser(rs);
 			}
 
 		} catch (SQLException e) {
@@ -138,7 +142,7 @@ public class UserRepository {
 	}
 
 	public static List<User_Info> ShowCustomers() throws SQLException {
-		String query1 = "SELECT TOP 7 * FROM dbo.User_Info";
+		String query1 = "SELECT * FROM dbo.User_Info";
 		Statement stmt = conn.createStatement();
 
 		ResultSet rs = stmt.executeQuery(query1);
@@ -155,7 +159,7 @@ public class UserRepository {
 	// shows the first name of the customer with id "id"
 	public void ShowCustomersByID(Integer id) throws SQLException {
 		// String idStr = id.toString();
-		String query1 = "SELECT TOP 7 * FROM dbo.User_Info " + "WHERE User_ID = ?";
+		String query1 = "SELECT * FROM dbo.User_Info " + "WHERE User_ID = ?";
 
 		// Statement stmt = conn.createStatement(query1);
 
@@ -188,21 +192,35 @@ public class UserRepository {
 		System.out.println(String.format("Rows affected: %d", rs));
 	}
 
-	public void DeleteCustomer(int id) throws SQLException {
-		String query = "DELETE dbo.User_Info " + "WHERE User_ID = ?";
+	/*
+	 * public void DeleteCustomer(int id) throws SQLException { String query =
+	 * "DELETE dbo.User_Info " + "WHERE User_ID = ?";
+	 * 
+	 * PreparedStatement ps = conn.prepareStatement(query); ps.setInt(1, id);
+	 * 
+	 * int rs = ps.executeUpdate();
+	 * 
+	 * System.out.println(String.format("Rows affected: %d", rs)); }
+	 */
 
-		PreparedStatement ps = conn.prepareStatement(query);
-		ps.setInt(1, id);
+	public void deleteUserById(int userID) {
+		String query1 = "DELETE FROM users WHERE User_ID = ?";
+		try (Connection conn = DriverManager.getConnection(url);
+				PreparedStatement pst1 = conn.prepareStatement(query1)) {
 
-		int rs = ps.executeUpdate();
+			pst1.setInt(1, userID);
 
-		System.out.println(String.format("Rows affected: %d", rs));
+			int rs = pst1.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
-
+	
 	public List<User_Info> GetCustomersByID(Integer id) throws SQLException {
 		List<User_Info> customers = new ArrayList<>();
 		String idStr = id.toString();
-		String query1 = "SELECT TOP 5 * FROM dbo.User_Info " + "WHERE User_ID = ?";
+		String query1 = "SELECT * FROM dbo.User_Info " + "WHERE User_ID = ?";
 
 		// Statement stmt = conn.createStatement(query1);
 
@@ -221,15 +239,6 @@ public class UserRepository {
 		return customers;
 	}
 
-	public static UserRepository getInstance() throws SQLException {
-
-		if (UserRepository.instance == null) {
-			UserRepository.instance = new UserRepository();
-		}
-
-		return UserRepository.instance;
-	}
-
 	private PreparedStatement getPSWithNames(Connection conn, String query, String firstName, String lastName,
 			String password) throws SQLException {
 		PreparedStatement ps = conn.prepareStatement(query);
@@ -239,32 +248,7 @@ public class UserRepository {
 		return ps;
 	}
 
-	public void deleteUserById(int userID) {
-		String query1 = "DELETE FROM users WHERE User_ID = ?";
-		try (Connection conn = DriverManager.getConnection(url);
-				PreparedStatement pst1 = conn.prepareStatement(query1)) {
-
-			pst1.setInt(1, userID);
-
-			int rs = pst1.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public void makeUserAdminById(int userID) {
-		String query1 = "UPDATE users SET Admin = 1 WHERE UserId = ?";
-		try (Connection conn = DriverManager.getConnection(url);
-			PreparedStatement pst1 = conn.prepareStatement(query1)) {
 	
-			pst1.setInt(1, userID);
-	
-			int rs = pst1.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 
 	public List<User_Info> getAllAdmins() {
 		List<User_Info> listOfUsers = new ArrayList<>();
@@ -277,7 +261,7 @@ public class UserRepository {
 				User_Info user = mapToUser(resultSet);
 				listOfUsers.add(user);
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -285,9 +269,3 @@ public class UserRepository {
 		return listOfUsers;
 	}
 }
-
-/*
- * moe si create new instance of customer assign values to fields add the
- * customer to the customers list Customer customer = new Customer();
- * customers.add(customer)
- */
