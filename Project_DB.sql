@@ -1,6 +1,6 @@
 USE [master]
 GO
-/****** Object:  Database [Project_Database]    Script Date: 6/3/2022 2:50:44 PM ******/
+/****** Object:  Database [Project_Database]    Script Date: 6/8/2022 8:35:49 AM ******/
 CREATE DATABASE [Project_Database]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -80,7 +80,19 @@ ALTER DATABASE [Project_Database] SET QUERY_STORE = OFF
 GO
 USE [Project_Database]
 GO
-/****** Object:  Table [dbo].[Construction_Properties]    Script Date: 6/3/2022 2:50:44 PM ******/
+/****** Object:  Table [dbo].[Admin_Info]    Script Date: 6/8/2022 8:35:49 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Admin_Info](
+	[Admin_ID] [int] NOT NULL,
+	[Admin_First_Name] [nvarchar](1000) NOT NULL,
+	[Admin_Last_Name] [nvarchar](1000) NOT NULL,
+	[Admin_Phone_Number] [nvarchar](1000) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Construction_Properties]    Script Date: 6/8/2022 8:35:49 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -96,7 +108,7 @@ CREATE TABLE [dbo].[Construction_Properties](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Field_Info]    Script Date: 6/3/2022 2:50:44 PM ******/
+/****** Object:  Table [dbo].[Field_Info]    Script Date: 6/8/2022 8:35:50 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -113,7 +125,7 @@ CREATE TABLE [dbo].[Field_Info](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Registration]    Script Date: 6/3/2022 2:50:44 PM ******/
+/****** Object:  Table [dbo].[Registration]    Script Date: 6/8/2022 8:35:50 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -126,7 +138,7 @@ CREATE TABLE [dbo].[Registration](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Store_Products]    Script Date: 6/3/2022 2:50:44 PM ******/
+/****** Object:  Table [dbo].[Store_Products]    Script Date: 6/8/2022 8:35:50 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -144,7 +156,7 @@ CREATE TABLE [dbo].[Store_Products](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User_Delivery]    Script Date: 6/3/2022 2:50:44 PM ******/
+/****** Object:  Table [dbo].[User_Delivery]    Script Date: 6/8/2022 8:35:50 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -163,7 +175,7 @@ CREATE TABLE [dbo].[User_Delivery](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User_Info]    Script Date: 6/3/2022 2:50:44 PM ******/
+/****** Object:  Table [dbo].[User_Info]    Script Date: 6/8/2022 8:35:50 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -182,7 +194,7 @@ CREATE TABLE [dbo].[User_Info](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[User_Payment]    Script Date: 6/3/2022 2:50:44 PM ******/
+/****** Object:  Table [dbo].[User_Payment]    Script Date: 6/8/2022 8:35:50 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -197,6 +209,26 @@ CREATE TABLE [dbo].[User_Payment](
 	[Payment_ID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+INSERT [dbo].[Admin_Info] ([Admin_ID], [Admin_First_Name], [Admin_Last_Name], [Admin_Phone_Number]) VALUES (1, N'Kris', N'Stoyanov', NULL)
+GO
+INSERT [dbo].[Admin_Info] ([Admin_ID], [Admin_First_Name], [Admin_Last_Name], [Admin_Phone_Number]) VALUES (2, N'Mocart', N'Ivanov', N'087-353-4355')
+GO
+INSERT [dbo].[Admin_Info] ([Admin_ID], [Admin_First_Name], [Admin_Last_Name], [Admin_Phone_Number]) VALUES (3, N'Stoyan', N'Traqnov', N'085-324-1324')
+GO
+INSERT [dbo].[Admin_Info] ([Admin_ID], [Admin_First_Name], [Admin_Last_Name], [Admin_Phone_Number]) VALUES (4, N'Alexandra', N'Ivanova', N'089-213-5321')
+GO
+INSERT [dbo].[Admin_Info] ([Admin_ID], [Admin_First_Name], [Admin_Last_Name], [Admin_Phone_Number]) VALUES (5, N'Petur', N'Stoyanov', NULL)
+GO
+INSERT [dbo].[Admin_Info] ([Admin_ID], [Admin_First_Name], [Admin_Last_Name], [Admin_Phone_Number]) VALUES (6, N'Iliqn', N'Qnakiev', N'087-214-9758')
+GO
+INSERT [dbo].[Admin_Info] ([Admin_ID], [Admin_First_Name], [Admin_Last_Name], [Admin_Phone_Number]) VALUES (7, N'Kaloqn', N'Dimitrov', NULL)
+GO
+INSERT [dbo].[Admin_Info] ([Admin_ID], [Admin_First_Name], [Admin_Last_Name], [Admin_Phone_Number]) VALUES (8, N'Mariq', N'Georgieva', NULL)
+GO
+INSERT [dbo].[Admin_Info] ([Admin_ID], [Admin_First_Name], [Admin_Last_Name], [Admin_Phone_Number]) VALUES (9, N'Boyan', N'Ralev', N'087-340-2349')
+GO
+INSERT [dbo].[Admin_Info] ([Admin_ID], [Admin_First_Name], [Admin_Last_Name], [Admin_Phone_Number]) VALUES (10, N'Ivana', N'Pehlivanova', NULL)
 GO
 INSERT [dbo].[Construction_Properties] ([Material_ID], [Field_ID], [Materials_Count], [Number_Of_Builders]) VALUES (1, 1, 4, 3)
 GO

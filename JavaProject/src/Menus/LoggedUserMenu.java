@@ -7,7 +7,7 @@ public class LoggedUserMenu {
 	public static void loggedUserMenu() {
 		Utils.writeLine("+------------------------------------------------------------------+");
 		Utils.writeLine("|                                                                  |");
-		Utils.writeLine("|                             SPORTS SYSTEM                        |");
+		Utils.writeLine("|                           SPORTS SYSTEM                          |");
 		Utils.writeLine("|                                                                  |");
 		Utils.writeLine("+------------------------------------------------------------------+");
 		Utils.writeLine("|                                                                  |");

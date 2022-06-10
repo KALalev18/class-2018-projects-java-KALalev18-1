@@ -9,7 +9,7 @@ public class ErrorMenu {
 		Utils.writeLine("+------------------------------------------------------------------+");
 		Utils.writeLine("|                   Please enter a valid option!                   |");
 		Utils.writeLine("+------------------------------------------------------------------+");
-		Utils.writeLine("                                                                  ");
+		Utils.writeLine("                                                                    ");
 		Utils.write("Please choose: ");
 	}
 
@@ -44,13 +44,4 @@ public class ErrorMenu {
 		Utils.writeLine("+------------------------------------------------------------------+");
 		Utils.writeLine("                                                                   ");
 	}
-
-	public static void invalidMovieName() {
-
-		Utils.writeLine("+------------------------------------------------------------------+");
-		Utils.writeLine("|                        Invalid movie name                        |");
-		Utils.writeLine("+------------------------------------------------------------------+");
-		Utils.writeLine("                                                                    ");
-	}
-
 }

@@ -66,12 +66,6 @@ public class AdministrationController {
 				removeSportRequests();
 				break;
 			}
-//			case 21: {
-//				authenticationService.destroySession();
-//				backToMainMenu();
-//				break;
-//			}
-
 			default:
 				ErrorMenu.invalidInputError();
 				choice = Utils.readInteger();

@@ -45,13 +45,13 @@ public class RegisterController {
 
 			Utils.writeLine("Password: ");
 			String password = Utils.read();
-			
+			Utils.writeLine("Phone number: ");
 			String phoneNumber = Utils.read();
 
-			regService.insertUser(1000011, 11, firstName, lastName, email, password, phoneNumber);
-
-			if (regService.getCorrectUser() == false) {
-				ErrorMenu.invalidUsername();
+			regService.insertUser(firstName, lastName, email, password, phoneNumber);
+			if (regService.getCorrectUser() == false)
+			{
+				ErrorMenu.invalidInputError();
 			}
 		}
 

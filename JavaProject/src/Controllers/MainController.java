@@ -22,10 +22,12 @@ public class MainController {
 	public void run() throws SQLException, NoSuchAlgorithmException, NoSuchProviderException {
 
 		int optionForAccount;
+		int AdminOrUserInput;
 
 		WelcomePage.welcomePage();
 
 		optionForAccount = Utils.readInteger();
+		
 
 		while (optionForAccount != 1 && optionForAccount != 2) {
 			ErrorMenu.invalidInputError();
@@ -34,23 +36,39 @@ public class MainController {
 
 		if (optionForAccount == 1) {
 
-			AccountMenu.login();
-			authController.run();
-
-			if (authService.getLoggedUser() != null) {
-				LoggedUserManagementController loggedUserController = new LoggedUserManagementController();
-				loggedUserController.run();
-
-			} else {
-
-				AdministrationController administrationController = new AdministrationController();
-				administrationController.run();
+			AdminOrUserMenu.adminOrUserMenu();
+			//authController.run();
+			AdminOrUserInput = Utils.readInteger();
+			if(AdminOrUserInput == 1)
+			{
+				authController.run();
+				AdminMenu.adminMenu();
+			}
+			if (AdminOrUserInput == 2)
+			{
+				authController.run();
+				LoggedUserMenu.loggedUserMenu();
+			}
+			else {
+				ErrorMenu.invalidInputError();
 			}
 
-		} else if (optionForAccount == 2) {
+		} 
+		
+		
+		else if (optionForAccount == 2) {
 
 			AccountMenu.register();
 			registerController.run();
+		}
+		if (authService.getLoggedUser() != null) {
+			LoggedUserManagementController loggedUserController = new LoggedUserManagementController();
+			loggedUserController.run();
+
+		} else {
+
+			AdministrationController administrationController = new AdministrationController();
+			administrationController.run();
 		}
 	}
 }

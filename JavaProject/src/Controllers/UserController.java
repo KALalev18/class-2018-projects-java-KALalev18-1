@@ -11,12 +11,14 @@ import java.util.stream.Collectors;
 import Menus.ErrorMenu;
 import Menus.ListMenu;
 import Models.User_Info;
+import Models.Admin_Info;
 import Services.AuthenticationService;
 import Services.UserService;
 
 public class UserController {
 	private final UserService userService;
 	private final AuthenticationService authService;
+	//private final AdministrationService adminService;
 
 	User_Info user = null;
 
@@ -35,14 +37,14 @@ public class UserController {
 			Utils.writeNewLine();
 			Utils.write("User Id: ");
 			Utils.writeInteger(user.getUser_ID());
-			Utils.write("First name: ");
-			Utils.write(user.getFirst_Name());
-			Utils.write("Last name: ");
-			Utils.write(user.getLast_Name());
 			Utils.write("Email: ");
 			Utils.write(user.getUser_Email());
 			Utils.write("Password: ");
 			Utils.write(user.getUser_Password());
+			Utils.write("First name: ");
+			Utils.write(user.getFirst_Name());
+			Utils.write("Last name: ");
+			Utils.write(user.getLast_Name());
 			Utils.write("Phone Number: ");
 			Utils.write(user.getPhone_Number());
 			Utils.writeNewLine();
@@ -73,30 +75,32 @@ public class UserController {
 
 		ListMenu.viewAllAdmins();
 
-		List<User_Info> admins = userService.getAllAdmins();
+		List<Admin_Info> admins = userService.getAllAdmins();
 
 		admins.stream().forEach(admin -> {
 
 			Utils.writeNewLine();
-			Utils.write("User Id: ");
-			Utils.writeInteger(user.getUser_ID());
-			Utils.write("First name: ");
-			Utils.write(user.getFirst_Name());
-			Utils.write("Last name: ");
-			Utils.write(user.getLast_Name());
+			Utils.write("Admin Id: ");
+			Utils.writeInteger(admin.getAdmin_ID());
 			Utils.write("Email: ");
-			Utils.write(user.getUser_Email());
+			Utils.write(admin.getAdmin_Email());
 			Utils.write("Password: ");
 			Utils.write(user.getUser_Password());
+			Utils.write("First name: ");
+			Utils.write(admin.getAdmin_First_Name());
+			Utils.write("Last name: ");
+			Utils.write(admin.getAdmin_Last_Name());
+			Utils.write("Password: ");
+			Utils.write(admin.getAdmin_Password());
 			Utils.write("Phone Number: ");
-			Utils.write(user.getPhone_Number());
+			Utils.write(admin.getAdmin_Phone_Number());
 			Utils.writeNewLine();
 
 		});
 
 		Utils.writeNewLine();
 
-		Utils.writeLine("Press 1 to go back:");
+		Utils.writeLine("Press 1 to go back: ");
 		int option = Utils.readInteger();
 		System.out.println();
 
@@ -187,7 +191,7 @@ public class UserController {
 	}
 
 	public void editPersonalAccount() throws SQLException {
-
+		
 	}
 
 	private void backToAdminMenu() throws SQLException {

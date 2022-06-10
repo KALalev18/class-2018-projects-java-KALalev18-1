@@ -16,9 +16,9 @@ public class AccountMenu {
 		Utils.writeLine("|                                                                  |");
 		Utils.writeLine("+------------------------------------------------------------------+");
 		Utils.writeLine("                                                                    ");
-		Utils.writeLine("First name: ");
-		Utils.writeLine("                                                                    ");
-		Utils.writeLine("Last name: ");
+//		Utils.writeLine("First name: ");
+//		Utils.writeLine("                                                                    ");
+//		Utils.writeLine("Last name: ");
 	}
 
 	public static void register() {

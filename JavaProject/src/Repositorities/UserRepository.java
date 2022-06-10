@@ -9,13 +9,13 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import Models.Admin_Info;
 import Models.User_Info;
 import Utils.DatabaseConnection;
 import Utils.Utils;
 
 public class UserRepository {
 	private static String url = "jdbc:sqlserver://SD2324\\sqlexpress;databaseName=Project_Database;integratedSecurity=true";
-	// private static UserRepository instance = null;
 	private static Connection conn;
 	private static UserRepository instance = null;
 
@@ -39,7 +39,7 @@ public class UserRepository {
 	}
 
 	public static User_Info mapToUser(ResultSet rs) throws SQLException {
-		int user_ID = rs.getInt("User_ID");
+		int user_ID = rs.getInt("Admin_ID");
 		int registration_ID = rs.getInt("Registration_ID");
 		String user_Email = rs.getString("User_Email");
 		String user_Password = rs.getString("User_Password");
@@ -51,51 +51,23 @@ public class UserRepository {
 		return user;
 	}
 
-	public List<User_Info> getUsers() throws SQLException {
-		List<User_Info> listOfUsers = new ArrayList<>();
-		String query1 = "SELECT * FROM dbo.User_Info";
-		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery(query1);
-		try (Connection conn = DriverManager.getConnection(url);
-				PreparedStatement ps = conn.prepareStatement(query1);
-				ResultSet resultSet = ps.executeQuery()) {
-
-			while (resultSet.next()) {
-				User_Info user = mapToUser(resultSet);
-				listOfUsers.add(user);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return listOfUsers;
-	}
-
-	public static List<User_Info> getAllUsers() {
-		List<User_Info> listOfUsers = new ArrayList<>();
-		String query = "SELECT * FROM dbo.User_Info;";
-		try (Connection conn = DriverManager.getConnection(url);
-				PreparedStatement ps = conn.prepareStatement(query);
-				ResultSet rs = ps.executeQuery()) {
-
-			while (rs.next()) {
-				User_Info user = mapToUser(rs);
-				listOfUsers.add(user);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return listOfUsers;
+	public static Admin_Info mapToAdmin(ResultSet rs) throws SQLException {
+		int admin_ID = rs.getInt("Admin_ID");
+		String admin_Email = rs.getString("Admin_Email");
+		String admin_Password = rs.getString("Admin_Password");
+		String admin_First_Name = rs.getString("Admin_First_Name");
+		String admin_Last_Name = rs.getString("Admin_Last_Name");
+		String admin_Phone_Number = rs.getString("Admin_Phone_Number");
+		Admin_Info admin = new Admin_Info(admin_ID, admin_Email, admin_Password, admin_First_Name, admin_Last_Name,
+				admin_Phone_Number);
+		return admin;
 	}
 
 	public User_Info getRegisteredUser(String firstName, String lastName, String password) {
 		User_Info user = null;
 		String query = "SELECT * FROM users WHERE First_Name = ?";
 		try (Connection conn = DatabaseConnection.getConnection();
-				PreparedStatement ps = getPSWithNames(conn, query, firstName, lastName, password);
+				PreparedStatement ps = getPSWithName(conn, query, firstName, lastName, password);
 				ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
@@ -178,7 +150,6 @@ public class UserRepository {
 		}
 	}
 
-	// update the first name of the customer with id "id"
 	public void UpdateCustomer(int id, String firstName, String lastName) throws SQLException {
 		String query = "UPDATE dbo.User_Info " + "SET First_Name = ?, Last_Name = ? " + "WHERE User_ID = ?";
 
@@ -192,31 +163,17 @@ public class UserRepository {
 		System.out.println(String.format("Rows affected: %d", rs));
 	}
 
-	/*
-	 * public void DeleteCustomer(int id) throws SQLException { String query =
-	 * "DELETE dbo.User_Info " + "WHERE User_ID = ?";
-	 * 
-	 * PreparedStatement ps = conn.prepareStatement(query); ps.setInt(1, id);
-	 * 
-	 * int rs = ps.executeUpdate();
-	 * 
-	 * System.out.println(String.format("Rows affected: %d", rs)); }
-	 */
+	public void DeleteCustomer(int id) throws SQLException {
+		String query = "DELETE dbo.User_Info " + "WHERE User_ID = ?";
 
-	public void deleteUserById(int userID) {
-		String query1 = "DELETE FROM users WHERE User_ID = ?";
-		try (Connection conn = DriverManager.getConnection(url);
-				PreparedStatement pst1 = conn.prepareStatement(query1)) {
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setInt(1, id);
 
-			pst1.setInt(1, userID);
+		int rs = ps.executeUpdate();
 
-			int rs = pst1.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
+		System.out.println(String.format("Rows affected: %d", rs));
 	}
-	
+
 	public List<User_Info> GetCustomersByID(Integer id) throws SQLException {
 		List<User_Info> customers = new ArrayList<>();
 		String idStr = id.toString();
@@ -239,33 +196,75 @@ public class UserRepository {
 		return customers;
 	}
 
-	private PreparedStatement getPSWithNames(Connection conn, String query, String firstName, String lastName,
-			String password) throws SQLException {
+	private PreparedStatement getPSWithName(Connection conn, String query, String firstName, String lastName, String password) throws SQLException {
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1, firstName);
-		ps.setString(2, lastName);
-		ps.setString(3, password);
 		return ps;
 	}
 
-	
-
-	public List<User_Info> getAllAdmins() {
-		List<User_Info> listOfUsers = new ArrayList<>();
-		String query = "SELECT * FROM users WHERE Admin = '1';";
+	public List<Admin_Info> getAllAdmins() {
+		List<Admin_Info> listOfAdmins = new ArrayList<>();
+		String query = "SELECT * FROM dbo.Admin_Info WHERE Admin_ID = ?";
 		try (Connection conn = DriverManager.getConnection(url);
 				PreparedStatement ps = conn.prepareStatement(query);
-				ResultSet resultSet = ps.executeQuery()) {
+				ResultSet rs = ps.executeQuery()) {
 
-			while (resultSet.next()) {
-				User_Info user = mapToUser(resultSet);
-				listOfUsers.add(user);
+			while (rs.next()) {
+				Admin_Info admin = mapToAdmin(rs);
+				listOfAdmins.add(admin);
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return listOfUsers;
+		return listOfAdmins;
+	}
+
+	public boolean insertUser(String user_Email, String user_Password, String first_Name, String last_Name,
+			String phone_Number) {
+		String query1 = "INSERT INTO dbo.User_Info (First_Name, Last_Name, User_Email, User_Password, Phone_Number) VALUES (?, ?, ?, ?, ?)";
+		String query2 = "SELECT * FROM dbo.User_Info WHERE First_Name = ?";
+		try (Connection conn = DatabaseConnection.getConnection();
+				PreparedStatement pst1 = conn.prepareStatement(query1);
+				PreparedStatement pst2 = conn.prepareStatement(query2)) {
+
+			ResultSet resultSet = pst2.executeQuery();
+
+			if (resultSet.next() == true) {
+				return false;
+			} else {
+				pst1.setString(1, user_Email);
+				pst1.setString(2, user_Password);
+				pst1.setString(3, first_Name);
+				pst1.setString(4, last_Name);
+				pst1.setString(5, phone_Number);
+
+				int rs = pst1.executeUpdate();
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+
+	public List<User_Info> getAllUsers() {
+		List<User_Info> users = new ArrayList<>();
+		String query = "SELECT * FROM dbo.User_Info WHERE Admin = '0';";
+		try (Connection conn = DriverManager.getConnection(url);
+				PreparedStatement ps = conn.prepareStatement(query);
+				ResultSet rs = ps.executeQuery()) {
+
+			while (rs.next()) {
+				User_Info user = mapToUser(rs);
+				users.add(user);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return users;
 	}
 }

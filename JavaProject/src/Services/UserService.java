@@ -6,16 +6,16 @@ import java.util.stream.Collectors;
 import java.sql.SQLException;
 import java.util.Collections;
 
+import Models.Admin_Info;
 import Models.User_Info;
 import Repositorities.UserRepository;
-import Utils.PasswordManager;
 
 public class UserService {
 
 	private static UserService instance = null;
 	private final UserRepository usersRepository;
 
-	private UserService() throws SQLException {
+	public UserService() throws SQLException {
 		this.usersRepository = UserRepository.getInstance();
 	}
 
@@ -33,29 +33,19 @@ public class UserService {
 		return users;
 	}
 
-	public List<User_Info> getAllAdmins() {
-		List<User_Info> admins = usersRepository.getAllAdmins();
+	public List<Admin_Info> getAllAdmins() {
+		List<Admin_Info> admins = usersRepository.getAllAdmins();
 
 		return admins;
 	}
 
-	public void deleteUserById(int userId) {
-		usersRepository.deleteUserById(userId);
+	public void deleteUserById(int userId) throws SQLException {
+		usersRepository.DeleteCustomer(userId);
 	}
 
 	public User_Info getRegisteredUser(String firstName, String lastName, String password) {
 
 		User_Info user = usersRepository.getRegisteredUser(firstName, lastName, password);
-
-		if (user != null) {
-			boolean hashPassword = PasswordManager.checkPass(password.toCharArray(),
-					user.getUser_Password().toCharArray());
-
-			if (hashPassword == false) {
-				return null;
-			}
-		}
-
 		return user;
 	}
 }

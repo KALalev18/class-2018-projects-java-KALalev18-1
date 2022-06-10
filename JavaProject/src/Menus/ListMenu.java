@@ -20,16 +20,6 @@ public class ListMenu {
 		Utils.writeLine("+------------------------------------------------------------------+");
 		Utils.writeLine("                                                                    ");
 	}
-
-	public static void makeUserAdmin() {
-
-		Utils.writeLine("                                                                    ");
-		Utils.writeLine("+------------------------------------------------------------------+");
-		Utils.writeLine("|                       Make a user admin                          |");
-		Utils.writeLine("+------------------------------------------------------------------+");
-		Utils.writeLine("                                                                    ");
-	}
-
 	public static void viewAllAdmins() {
 
 		Utils.writeLine("                                                                    ");
@@ -43,9 +33,10 @@ public class ListMenu {
 
 		Utils.writeLine("                                                                    ");
 		Utils.writeLine("+------------------------------------------------------------------+");
-		Utils.writeLine("|                       Make a user admin                          |");
+		Utils.writeLine("|                            All users                             |");
 		Utils.writeLine("+------------------------------------------------------------------+");
 		Utils.writeLine("                                                                    ");
+		
 	}
 	
 	public static void editPersonalAccount() {

@@ -8,7 +8,7 @@ public class AdminMenu {
 		
 		Utils.writeLine("+------------------------------------------------------------------+");
 		Utils.writeLine("|                                                                  |");
-		Utils.writeLine("|                              ADMIN                               |");
+		Utils.writeLine("|                             ADMIN MENU                           |");
 		Utils.writeLine("|                                                                  |");
 		Utils.writeLine("+------------------------------------------------------------------+");
 		Utils.writeLine("|                                                                  |");
