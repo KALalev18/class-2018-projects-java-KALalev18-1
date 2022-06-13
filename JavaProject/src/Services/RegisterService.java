@@ -28,8 +28,8 @@ public class RegisterService {
         return correctUser;
     }
 
-	public void insertUser(String user_Email, String user_Password, String first_Name, String last_Name, String phone_Number) throws NoSuchAlgorithmException, NoSuchProviderException {
+	public void insertUser(String user_Email, String user_Password, String first_Name, String last_Name, String phone_Number){
 		
-		correctUser = usersRepository.insertUser(user_Email, user_Password, first_Name, last_Name, phone_Number);
+		correctUser = usersRepository.insertUser(0, 0, user_Email, user_Password, first_Name, last_Name, phone_Number);
 	}
 }

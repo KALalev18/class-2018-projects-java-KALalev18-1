@@ -13,10 +13,11 @@ import Repositorities.UserRepository;
 public class UserService {
 
 	private static UserService instance = null;
-	private final UserRepository usersRepository;
+	private final UserRepository userRepository;
+	
 
 	public UserService() throws SQLException {
-		this.usersRepository = UserRepository.getInstance();
+		this.userRepository = UserRepository.getInstance();
 	}
 
 	public static UserService getInstance() throws SQLException {
@@ -28,24 +29,41 @@ public class UserService {
 		return UserService.instance;
 	}
 
-	public List<User_Info> getAllUsers() {
-		List<User_Info> users = usersRepository.getAllUsers();
-		return users;
+	public Boolean isLogin(String userEmail, String userPassword) {
+		return userRepository.emailAndPasswordMatch(userEmail, userPassword);
 	}
 
-	public List<Admin_Info> getAllAdmins() {
-		List<Admin_Info> admins = usersRepository.getAllAdmins();
-
-		return admins;
+	public User_Info getLoggedInUser(String userEmail, String userPassword) {
+		if (isLogin(userEmail, userPassword)) {
+			return userRepository.getUserByEmail(userEmail);
+		} else {
+			return null;
+		}
 	}
 
-	public void deleteUserById(int userId) throws SQLException {
-		usersRepository.DeleteCustomer(userId);
+	public User_Info getUserById(int user_ID) {
+		return userRepository.getUserById(user_ID);
 	}
 
-	public User_Info getRegisteredUser(String firstName, String lastName, String password) {
+	public List<User_Info> getAllUsers() throws SQLException {
+		return userRepository.ShowCustomers();
+	}
 
-		User_Info user = usersRepository.getRegisteredUser(firstName, lastName, password);
-		return user;
+	public Boolean updateUser(int user_ID, String firstName, String lastName, String userPassword) {
+		User_Info user = getUserById(user_ID);
+		if (user != null) {
+			user.setFirst_Name(firstName);
+			user.setLast_Name(userPassword);
+			user.setUser_Password(userPassword);
+
+			return userRepository.updateUser(user, user_ID);
+
+		} else {
+			return false;
+		}
+	}
+
+	public Boolean deleteUser(int user_ID) throws SQLException {
+		return userRepository.DeleteUser(user_ID);
 	}
 }

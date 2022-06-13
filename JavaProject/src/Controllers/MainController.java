@@ -41,12 +41,12 @@ public class MainController {
 			AdminOrUserInput = Utils.readInteger();
 			if(AdminOrUserInput == 1)
 			{
-				authController.run();
+				//authController.run();
 				AdminMenu.adminMenu();
 			}
 			if (AdminOrUserInput == 2)
 			{
-				authController.run();
+				//authController.run();
 				LoggedUserMenu.loggedUserMenu();
 			}
 			else {
@@ -70,5 +70,11 @@ public class MainController {
 			AdministrationController administrationController = new AdministrationController();
 			administrationController.run();
 		}
+		
+		
+		
 	}
+	
+	
+	
 }

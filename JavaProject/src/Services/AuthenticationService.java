@@ -27,11 +27,6 @@ public class AuthenticationService {
     public User_Info getLoggedUser() {
         return authenticatedUser;
     }
-
-    public void authenticateUser(String firstName, String lastName, String password) {
-        this.authenticatedUser = userService.getRegisteredUser(firstName, lastName, password);
-    }
-    
     public void destroySession() {
     	authenticatedUser = null;  	
     }
