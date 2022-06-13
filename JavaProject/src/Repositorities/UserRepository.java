@@ -236,12 +236,7 @@ public class UserRepository {
 		return customers;
 	}
 
-	private PreparedStatement getPSWithName(Connection conn, String query, String firstName, String lastName,
-			String password) throws SQLException {
-		PreparedStatement ps = conn.prepareStatement(query);
-		ps.setString(1, firstName);
-		return ps;
-	}
+	
 
 	public List<Admin_Info> getAllAdmins() {
 		List<Admin_Info> listOfAdmins = new ArrayList<>();
@@ -283,7 +278,7 @@ public class UserRepository {
 
 	public User_Info getUserById(int user_ID) {
 		User_Info user = null;
-		String query = "SELECT * FROM users WHERE User_ID = ?;";
+		String query = "SELECT * FROM dbo.User_Info WHERE User_ID = ?;";
 
 		try (Connection conn = DriverManager.getConnection(url); PreparedStatement ps = conn.prepareStatement(query)) {
 			ps.setLong(1, user_ID);
@@ -305,7 +300,7 @@ public class UserRepository {
 		}
 
 		if (userExists(userId)) {
-			String query = "UPDATE users SET User_ID = ?, userName = ?, userPassword = ?, isAdmin = ? WHERE userId = ?";
+			String query = "UPDATE dbo.User_Info SET User_ID = ?, userName = ?, userPassword = ?, isAdmin = ? WHERE userId = ?";
 
 			try (Connection conn = DriverManager.getConnection(url);
 
@@ -348,7 +343,7 @@ public class UserRepository {
 
 	public Boolean emailAndPasswordMatch(String userEmail, String userPassword) {
 		User_Info user = null;
-		String query = "SELECT * FROM users WHERE User_Email = ? AND User_Password = ?;";
+		String query = "SELECT * FROM dbo.User_Info WHERE User_Email = ? AND User_Password = ?;";
 
 		try (Connection conn = DriverManager.getConnection(url); PreparedStatement ps = conn.prepareStatement(query)) {
 			ps.setString(1, userEmail);
@@ -410,5 +405,29 @@ public class UserRepository {
 		Admin_Info admin = new Admin_Info(admin_ID, admin_Email, admin_Password, admin_First_Name, admin_Last_Name,
 				admin_Phone_Number);
 		return admin;
+	}
+
+	public User_Info getRegisteredUser(String email) {
+		User_Info user = null;
+		String query = "SELECT * FROM dbo.User_Info WHERE Username = ?";
+		try (Connection conn = DriverManager.getConnection(url);
+				PreparedStatement ps = getPSWithEmail(conn, query, email);
+				ResultSet resultSet = ps.executeQuery()) {
+			
+			while (resultSet.next()) {
+				user = mapToUser(resultSet);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
+	
+	private PreparedStatement getPSWithEmail(Connection conn, String query, String email) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setString(1, email);
+		return ps;
 	}
 }

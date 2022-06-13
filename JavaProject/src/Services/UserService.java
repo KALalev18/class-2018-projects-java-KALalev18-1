@@ -14,7 +14,6 @@ public class UserService {
 
 	private static UserService instance = null;
 	private final UserRepository userRepository;
-	
 
 	public UserService() throws SQLException {
 		this.userRepository = UserRepository.getInstance();
@@ -63,7 +62,44 @@ public class UserService {
 		}
 	}
 
-	public Boolean deleteUser(int user_ID) throws SQLException {
+	public Boolean deleteUserById(int user_ID) throws SQLException {
 		return userRepository.DeleteUser(user_ID);
+	}
+
+	public User_Info getRegisteredUser(String email, String password) {
+		User_Info user = userRepository.getRegisteredUser(email);
+
+		if (user != null) {
+			return null;
+		}
+
+		return user;
+	}
+
+	public Boolean addUser(String userName, String password, String firstName, String lastName, String phoneNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Boolean updateUser(int user_ID, String firstName, String lastName, String userEmail, String userPassword,
+			String phoneNumber) {
+		User_Info user = getUserById(user_ID);
+		if (user != null) {
+			user.setFirst_Name(firstName);
+			user.setLast_Name(lastName);
+			user.setUser_Email(userEmail);
+			user.setUser_Password(userPassword);
+			user.setPhone_Number(phoneNumber);
+			return userRepository.updateUser(user, user_ID);
+
+		} else {
+			return false;
+		}
+	}
+
+	public List<Admin_Info> getAllAdmins() {
+		List<Admin_Info> admins = userRepository.getAllAdmins();
+
+		return admins;
 	}
 }

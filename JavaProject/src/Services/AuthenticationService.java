@@ -31,4 +31,8 @@ public class AuthenticationService {
     	authenticatedUser = null;  	
     }
 
+	public void authenticateUser(String email, String password) {
+		this.authenticatedUser = userService.getRegisteredUser(email, password);
+	}
+
 }
